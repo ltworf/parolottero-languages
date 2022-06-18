@@ -47,7 +47,7 @@ def scan_language(language: Language) -> set[str]:
         for binaryword in f.readlines():
             try:
                 word = binaryword.decode(language.encoding)
-            except:
+            except Exception:
                 print(f'Decoding error for word {binaryword!r}. Skipping')
                 continue
 
@@ -93,7 +93,7 @@ def letter_frequency(words: Iterable[str]) -> list[tuple[str, int]]:
         for letter in word:
             frequency[letter] = frequency.get(letter, 0) + 1
 
-    freqs = [(k, v) for k,v in frequency.items()]
+    freqs = [(k, v) for k, v in frequency.items()]
     freqs.sort(key=lambda x: x[1])
     return freqs
 
