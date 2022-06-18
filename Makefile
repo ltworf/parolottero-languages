@@ -19,20 +19,8 @@
 .PHONY: wordlists
 wordlists: language_data/swedish language_data/english language_data/american language_data/greek language_data/italian language_data/basque language_data/french language_data/sicilian
 
-dict:
-	mkdir -p dict
-
-dict/sicilian: dict
-	wget https://github.com/ltworf/sicilianu/releases/download/2022-03-18/wsicilian-2022-03-18.tar.gz -O $@.tar.gz
-	cd dict; tar -xf `basename $@.tar.gz`
-	rm $@.tar.gz
-	touch $@
-	mv dict/wsicilian $@
-
-language_data:
-	mkdir language_data
-
-language_data/%: language_data xpifiles dict/sicilian
+language_data/%: dict/sicilian dict/italian dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/basque.xpi dict/french.xpi
+	mkdir -p language_data
 	utils/lang_init.py `basename $@` $@ $@.wordlist
 
 .PHONY: clean
@@ -72,20 +60,39 @@ deb-pkg: dist
 	mv /tmp/parolottero*.* deb-pkg
 	lintian --pedantic -E --color auto -i -I deb-pkg/*changes deb-pkg/*deb
 
-dict/swedish.xpi: dict
+dict/swedish.xpi:
+	mkdir -p dict
 	wget https://addons.mozilla.org/firefox/downloads/file/3539390/gorans_hemmasnickrade_ordli-1.21.xpi -O $@
-dict/english.xpi: dict
+	touch $@
+dict/english.xpi:
+	mkdir -p dict
 	wget https://addons.mozilla.org/firefox/downloads/file/3956029/british_english_dictionary_2-3.0.9.xpi -O $@
-dict/american.xpi: dict
+	touch $@
+dict/american.xpi:
+	mkdir -p dict
 	wget https://addons.mozilla.org/firefox/downloads/file/3893473/us_english_dictionary-91.0.xpi -O $@
-dict/greek.xpi: dict
+	touch $@
+dict/greek.xpi:
+	mkdir -p dict
 	wget https://addons.mozilla.org/firefox/downloads/file/1163899/greek_spellchecking_dictionary-0.8.5.2webext.xpi -O $@
-dict/italian.xpi: dict
-	wget https://addons.mozilla.org/firefox/downloads/file/3693497/dizionario_italiano-5.1.xpi -O $@
-dict/basque.xpi: dict
+	touch $@
+dict/italian:
+	mkdir -p dict
+	wget https://github.com/napolux/paroleitaliane/raw/master/paroleitaliane/280000_parole_italiane.txt -O $@
+	# https://addons.mozilla.org/firefox/downloads/file/3693497/dizionario_italiano-5.1.xpi -O $@
+	touch $@
+dict/basque.xpi:
+	mkdir -p dict
 	wget https://addons.mozilla.org/firefox/downloads/file/1163937/xuxen-5.1.0.1webext.xpi -O $@
-dict/french.xpi: dict
+	touch $@
+dict/french.xpi:
+	mkdir -p dict
 	wget https://addons.mozilla.org/firefox/downloads/file/3581786/dictionnaire_francais1-7.0b.xpi -O $@
-
-.PHONY: xpifiles
-xpifiles: dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/italian.xpi dict/basque.xpi dict/french.xpi
+	touch $@
+dict/sicilian:
+	mkdir -p dict
+	wget https://github.com/ltworf/sicilianu/releases/download/2022-03-18/wsicilian-2022-03-18.tar.gz -O $@.tar.gz
+	cd dict; tar -xf `basename $@.tar.gz`
+	rm $@.tar.gz
+	mv dict/wsicilian $@
+	touch $@
