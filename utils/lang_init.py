@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# parolottero
+# parolottero-languages
 # Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ from sys import argv, exit
 from math import log
 from typing import NamedTuple, Iterable
 from pathlib import Path
+from zipfile import ZipFile
 
 
 class Language(NamedTuple):
@@ -32,41 +33,57 @@ class Language(NamedTuple):
     encoding: str = 'utf-8'
 
 
+def readwords(language: Language):
+
+    wordlist = 'dict' / language.wordlist
+
+    if wordlist.name.endswith('.xpi'):
+        z = ZipFile(wordlist, 'r')
+        dicfiles = [i for i in z.filelist if i.filename.endswith('.dic')]
+        assert len(dicfiles) == 1
+        with z.open(dicfiles.pop(), 'r') as f:
+            f.readline() # Skip first line
+            for i in f:
+                if b'/' in i:
+                    i = i.split(b'/', 1)[0]
+                yield i
+    else:
+        with open(wordlist, 'rb') as f:
+            yield from f
+
+
 def scan_language(language: Language) -> set[str]:
     '''
     Load a language, returns a set of playable words
     '''
     words = set()
 
-    wordlist = language.wordlist
-    wordlist = 'dict' / language.wordlist
-    if not wordlist.exists():
-        wordlist = '/usr/share/' / wordlist
+    for binaryword in readwords(language):
+        try:
+            word = binaryword.decode(language.encoding)
+        except Exception:
+            print(f'Decoding error for word {binaryword!r}. Skipping')
+            continue
 
-    with open(wordlist, 'rb') as f:
-        for binaryword in f.readlines():
-            try:
-                word = binaryword.decode(language.encoding)
-            except Exception:
-                print(f'Decoding error for word {binaryword!r}. Skipping')
-                continue
+        word = word.strip()
 
-            word = word.strip()
+        if not word:
+            # Empty word
+            continue
+        if word.upper() == word:
+            # All uppercase word, probably not a real word
+            continue
 
-            if word.upper() == word:
-                # All uppercase word, probably not a real word
-                continue
+        word = word.lower()
 
-            word = word.lower()
+        for find, replace in language.substitutions:
+            word = word.replace(find, replace)
 
-            for find, replace in language.substitutions:
-                word = word.replace(find, replace)
+        if set(word).difference(language.letters):
+            # unknown symbols in the word, skipping
+            continue
 
-            if set(word).difference(language.letters):
-                # unknown symbols in the word, skipping
-                continue
-
-            words.add(word)
+        words.add(word)
     return words
 
 
@@ -176,16 +193,23 @@ languages = {
         letters=set('abcdefghjkilmnopqrstuvwxyzäöå'),
         vowels=set('aeiouäöå'),
         substitutions=set(),
-        wordlist=Path('swedish'),
-        encoding='iso-8859-15',
+        wordlist=Path('swedish.xpi'),
     ),
     'american': Language(
         name='US English',
         letters=set('abcdefghilmnopqrstuvzwxyjk'),
         vowels=set('aeiou'),
         substitutions=set(),
-        wordlist=Path('american-english'),
-    )
+        wordlist=Path('american.xpi'),
+        encoding='iso-8859-15',
+    ),
+    'english': Language(
+        name='English',
+        letters=set('abcdefghilmnopqrstuvzwxyjk'),
+        vowels=set('aeiou'),
+        substitutions=set(),
+        wordlist=Path('english.xpi'),
+    ),
 }
 
 
