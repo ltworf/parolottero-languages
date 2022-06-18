@@ -33,8 +33,8 @@ clean:
 
 .PHONY: install
 install: wordlists
-	install -d $${DESTDIR:-/}/usr/share/games/parolottero-languages/language_data
-	cp language_data/* $${DESTDIR:-/}/usr/share/games/parolottero-languages/language_data/
+	install -d $${DESTDIR:-/}/usr/share/games/parolottero/language_data
+	cp language_data/* $${DESTDIR:-/}/usr/share/games/parolottero/language_data/
 
 .PHONY: dist
 dist: wordlists
@@ -46,6 +46,7 @@ dist: wordlists
 		cd /tmp; \
 		tar --exclude '*.user' -zcf parolottero-languages.tar.gz \
 			parolottero-languages/language_data \
+			parolottero-languages/dict \
 			parolottero-languages/utils \
 			parolottero-languages/Makefile \
 			parolottero-languages/LICENSE \
@@ -58,13 +59,13 @@ dist: wordlists
 
 .PHONY: deb-pkg
 deb-pkg: dist
-	$(RM) -r /tmp/parolottero-languages*
+	$(RM) -r /tmp/parolottero*
 	mv parolottero-languages*orig* /tmp
 	cd /tmp; tar -xf parolottero-languages*orig*.gz
 	cp -r debian /tmp/parolottero-languages/
 	cd /tmp/parolottero-languages; dpkg-buildpackage --changes-option=-S
 	mkdir -p deb-pkg
-	mv /tmp/parolottero-languages*.* deb-pkg
+	mv /tmp/parolottero*.* deb-pkg
 	lintian --pedantic -E --color auto -i -I deb-pkg/*changes deb-pkg/*deb
 
 dict/swedish.xpi:
