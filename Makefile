@@ -58,13 +58,15 @@ dist: wordlists
 	gpg --sign --armor --detach-sign ./parolottero-languages_`head -1 CHANGELOG`.orig.tar.gz
 
 .PHONY: deb-pkg
-deb-pkg: dist
+deb-pkg: dist wordlists
+	mkdir -p deb-pkg
+	cp language_data/* deb-pkg
+	./compress_lang.sh
 	$(RM) -r /tmp/parolottero*
 	mv parolottero-languages*orig* /tmp
 	cd /tmp; tar -xf parolottero-languages*orig*.gz
 	cp -r debian /tmp/parolottero-languages/
 	cd /tmp/parolottero-languages; dpkg-buildpackage --changes-option=-S
-	mkdir -p deb-pkg
 	mv /tmp/parolottero*.* deb-pkg
 	lintian --pedantic -E --color auto -i -I deb-pkg/*changes deb-pkg/*deb
 
