@@ -75,5 +75,20 @@ deb-pkg: dist
 	mv /tmp/parolottero*.* deb-pkg
 	lintian --pedantic -E --color auto -i -I deb-pkg/*changes deb-pkg/*deb
 
-translations:
-	cd src; lupdate -verbose parolottero.pro
+dict/swedish.xpi: dict
+	wget https://addons.mozilla.org/firefox/downloads/file/3539390/gorans_hemmasnickrade_ordli-1.21.xpi -O $@
+dict/english.xpi: dict
+	wget https://addons.mozilla.org/firefox/downloads/file/3956029/british_english_dictionary_2-3.0.9.xpi -O $@
+dict/american.xpi: dict
+	wget https://addons.mozilla.org/firefox/downloads/file/3893473/us_english_dictionary-91.0.xpi -O $@
+dict/greek.xpi: dict
+	wget https://addons.mozilla.org/firefox/downloads/file/1163899/greek_spellchecking_dictionary-0.8.5.2webext.xpi -O $@
+dict/italian.xpi: dict
+	wget https://addons.mozilla.org/firefox/downloads/file/3693497/dizionario_italiano-5.1.xpi -O $@
+dict/basque.xpi: dict
+	wget https://addons.mozilla.org/firefox/downloads/file/1163937/xuxen-5.1.0.1webext.xpi -O $@
+dict/french.xpi: dict
+	wget https://addons.mozilla.org/firefox/downloads/file/3581786/dictionnaire_francais1-7.0b.xpi -O $@
+
+.PHONY: xpifiles
+xpifiles: dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/italian.xpi dict/basque.xpi dict/french.xpi
