@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# parolottero
+# parolottero-languages
 # Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 #
 # This program is free software: you can redistribute it and/or modify
@@ -202,7 +202,14 @@ languages = {
         substitutions=set(),
         wordlist=Path('american.xpi'),
         encoding='iso-8859-15',
-    )
+    ),
+    'english': Language(
+        name='English',
+        letters=set('abcdefghilmnopqrstuvzwxyjk'),
+        vowels=set('aeiou'),
+        substitutions=set(),
+        wordlist=Path('english.xpi'),
+    ),
 }
 
 
