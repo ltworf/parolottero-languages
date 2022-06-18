@@ -1,4 +1,4 @@
-# parolottero
+# parolottero-languages
 # Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
 #
 # This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,10 @@
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 .PHONY: wordlists
-wordlists: language_data/swedish language_data/english language_data/american language_data/greek language_data/italian language_data/basque language_data/french language_data/sicilian
+wordlists: language_data/swedish language_data/english language_data/american language_data/italian language_data/sicilian
+#TODO language_data/greek
+#TODO language_data/basque
+#TODO language_data/french
 
 language_data/%: dict/sicilian dict/italian dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/basque.xpi dict/french.xpi
 	mkdir -p language_data
@@ -28,36 +31,40 @@ clean:
 	$(RM) -r language_data
 	$(RM) -r dict
 
+.PHONY: install
+install: wordlists
+	install -D $${DESTDIR:-/}/usr/share/games/parolottero-languages/language_data
+	cp language_data/* $${DESTDIR:-/}/usr/share/games/parolottero-languages/language_data/
+
 .PHONY: dist
 dist: wordlists
-	rm -rf /tmp/parolottero/
-	rm -rf /tmp/parolottero-*
-	mkdir /tmp/parolottero/
-	cp -R * /tmp/parolottero/
+	rm -rf /tmp/parolottero-languages/
+	rm -rf /tmp/parolottero-languages-*
+	mkdir /tmp/parolottero-languages/
+	cp -R * /tmp/parolottero-languages/
 	( \
 		cd /tmp; \
-		tar --exclude '*.user' -zcf parolottero.tar.gz \
-			parolottero/language_data \
-			parolottero/utils \
-			parolottero/src \
-			parolottero/Makefile \
-			parolottero/LICENSE \
-			parolottero/README.md \
-			parolottero/CHANGELOG \
-			parolottero/CODE_OF_CONDUCT.md \
+		tar --exclude '*.user' -zcf parolottero-languages.tar.gz \
+			parolottero-languages/language_data \
+			parolottero-languages/utils \
+			parolottero-languages/Makefile \
+			parolottero-languages/LICENSE \
+			parolottero-languages/README.md \
+			parolottero-languages/CHANGELOG \
+			parolottero-languages/CODE_OF_CONDUCT.md \
 	)
-	mv /tmp/parolottero.tar.gz ./parolottero_`head -1 CHANGELOG`.orig.tar.gz
-	gpg --sign --armor --detach-sign ./parolottero_`head -1 CHANGELOG`.orig.tar.gz
+	mv /tmp/parolottero-languages.tar.gz ./parolottero-languages_`head -1 CHANGELOG`.orig.tar.gz
+	gpg --sign --armor --detach-sign ./parolottero-languages_`head -1 CHANGELOG`.orig.tar.gz
 
 .PHONY: deb-pkg
 deb-pkg: dist
-	$(RM) -r /tmp/parolottero*
-	mv parolottero*orig* /tmp
-	cd /tmp; tar -xf parolottero*orig*.gz
-	cp -r debian /tmp/parolottero/
-	cd /tmp/parolottero; dpkg-buildpackage --changes-option=-S
+	$(RM) -r /tmp/parolottero-languages*
+	mv parolottero-languages*orig* /tmp
+	cd /tmp; tar -xf parolottero-languages*orig*.gz
+	cp -r debian /tmp/parolottero-languages/
+	cd /tmp/parolottero-languages; dpkg-buildpackage --changes-option=-S
 	mkdir -p deb-pkg
-	mv /tmp/parolottero*.* deb-pkg
+	mv /tmp/parolottero-languages*.* deb-pkg
 	lintian --pedantic -E --color auto -i -I deb-pkg/*changes deb-pkg/*deb
 
 dict/swedish.xpi:
