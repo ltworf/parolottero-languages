@@ -33,7 +33,7 @@ clean:
 
 .PHONY: install
 install: wordlists
-	install -D $${DESTDIR:-/}/usr/share/games/parolottero-languages/language_data
+	install -d $${DESTDIR:-/}/usr/share/games/parolottero-languages/language_data
 	cp language_data/* $${DESTDIR:-/}/usr/share/games/parolottero-languages/language_data/
 
 .PHONY: dist
