@@ -29,6 +29,7 @@ class Language(NamedTuple):
     vowels: set[str]
     substitutions: set[tuple[str, str]]
     wordlist: Path
+    extrawordlist: Path
     name: str
     encoding: str = 'utf-8'
 
@@ -84,6 +85,19 @@ def scan_language(language: Language) -> set[str]:
             continue
 
         words.add(word)
+
+        # Add or remove extra words, if there are any present
+        if language.extrawordlist.exists():
+            with language.extrawordlist.open('rt') as f:
+                for line in f:
+                    line = line.strip()
+                    if line.startswith('-'):
+                        try:
+                            words.remove(line[1:])
+                        except Exception:
+                            ...
+                    elif line.startswith('+'):
+                        words.add(line[1:])
     return words
 
 
@@ -173,6 +187,7 @@ languages = {
             ('ù', 'u'),
         },
         wordlist=Path('sicilian'),
+        extrawordlist=Path('extralist/sicilian.extra'),
     ),
     'italian': Language(
         name='Italiano',
@@ -187,6 +202,7 @@ languages = {
             ('ù', 'u'),
         },
         wordlist=Path('italian'),
+        extrawordlist=Path('extralist/italian.extra'),
     ),
     'swedish': Language(
         name='Svenska',
@@ -194,6 +210,7 @@ languages = {
         vowels=set('aeiouäöå'),
         substitutions=set(),
         wordlist=Path('swedish.xpi'),
+        extrawordlist=Path('extralist/swedish.extra'),
     ),
     'american': Language(
         name='US English',
@@ -202,6 +219,7 @@ languages = {
         substitutions=set(),
         wordlist=Path('american.xpi'),
         encoding='iso-8859-15',
+        extrawordlist=Path('extralist/american.extra'),
     ),
     'english': Language(
         name='English',
@@ -209,6 +227,7 @@ languages = {
         vowels=set('aeiou'),
         substitutions=set(),
         wordlist=Path('english.xpi'),
+        extrawordlist=Path('extralist/english.extra'),
     ),
 }
 
