@@ -3,3 +3,4 @@ language_data/
 build-*
 deb-pkg/
 dict/
+.token
