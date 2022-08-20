@@ -69,12 +69,28 @@ class Issue(NamedTuple):
             if l.startswith(prefix):
                 yield l
 
+    def diff(self) -> Iterable[str]:
+        yield from self._prefix('+')
+        yield from self._prefix('-')
+
+    @property
+    def language(self) -> str:
+        return next(self._prefix('Language: ')).split(' ')[-1]
+
+    @property
+    def extrafile(self) -> str:
+        a = {
+            'Sicilianu': 'extralist/sicilian.extra',
+            'Italiano': 'extralist/italian.extra',
+        }
+        return Path(a[self.language])
+
     @property
     def machineid(self) -> str:
         return next(self._prefix('id: ')).split(' ')[-1]
 
     def __str__(self) -> str:
-        return f'#{self.number}: {self.title}\nAutomatic: {self.autoissue} From machine: {self.machineid}\n'
+        return f'#{self.number}: {self.language}\nAutomatic: {self.autoissue} From machine: {self.machineid}\n'
 
 
 
