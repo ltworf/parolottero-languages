@@ -26,6 +26,7 @@ import json
 from typing import *
 import urllib.request
 from pathlib import Path
+import subprocess
 
 import typedload.dataloader
 
@@ -107,7 +108,8 @@ def interactive_fix_issue(issue: Issue) -> None:
         for l in extras:
             print(l, file=f)
 
-    # TODO create commit and close the issue
+    subprocess.check_call(['git', 'add', issue.extrafile])
+    subprocess.check_call(['git', 'commit', '-m', f'Fix user reported mistakes\nCloses: {issue.number}', issue.extrafile])
     # TODO close the issue even if all changes are rejected
 
 
