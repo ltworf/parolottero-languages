@@ -21,12 +21,11 @@
 
 # This is copy pasted from typedload's example.py
 
-import argparse
 from datetime import datetime
-from enum import Enum
 import json
 from typing import *
 import urllib.request
+from pathlib import Path
 
 import typedload.dataloader
 
@@ -65,8 +64,17 @@ class Issue(NamedTuple):
             'Item count: ' in self.body and \
             'Language: ' in self.body
 
+    def _prefix(self, prefix: str) -> Iterable[str]:
+        for l in self.body.split('\n'):
+            if l.startswith(prefix):
+                yield l
+
+    @property
+    def machineid(self) -> str:
+        return next(self._prefix('id: ')).split(' ')[-1]
+
     def __str__(self) -> str:
-        return f'#{self.number}: {self.title}\nAutomatic: {self.autoissue}\n'
+        return f'#{self.number}: {self.title}\nAutomatic: {self.autoissue} From machine: {self.machineid}\n'
 
 
 
