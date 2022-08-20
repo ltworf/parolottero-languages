@@ -111,7 +111,7 @@ def interactive_fix_issue(issue: Issue) -> None:
             print(l, file=f)
 
     subprocess.check_call(['git', 'add', issue.extrafile])
-    subprocess.check_call(['git', 'commit', '-m', f'Fix user reported mistakes\nCloses: {issue.number}', issue.extrafile])
+    subprocess.check_call(['git', 'commit', '-m', f'Fix user reported mistakes\nCloses: #{issue.number}', issue.extrafile])
     # TODO close the issue even if all changes are rejected
 
 
