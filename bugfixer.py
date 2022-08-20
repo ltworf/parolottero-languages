@@ -100,7 +100,7 @@ def interactive_fix_issue(issue: Issue) -> None:
 
     print(f'===== Doing extra words for {issue.language}')
     for diff in issue.diff():
-        reply = input(f'Is this valid [yN]? {diff}')
+        reply = input(f'Is this valid "{diff}" [yN]? ')
         if reply in {'y', 'Y', 'YES', 'yes'}:
             extras.add(diff)
 
