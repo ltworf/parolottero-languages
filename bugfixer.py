@@ -105,6 +105,8 @@ def interactive_fix_issue(issue: Issue) -> None:
             extras.add(diff)
 
     with issue.extrafile.open('wt') as f:
+        wlist = list(extras)
+        wlist.sort()
         for l in extras:
             print(l, file=f)
 
