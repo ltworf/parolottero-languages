@@ -68,7 +68,7 @@ class Issue(NamedTuple):
     def _prefix(self, prefix: str) -> Iterable[str]:
         for l in self.body.split('\n'):
             if l.startswith(prefix):
-                yield l
+                yield l.strip()
 
     def diff(self) -> Iterable[str]:
         yield from self._prefix('+')
@@ -111,8 +111,11 @@ def interactive_fix_issue(issue: Issue) -> None:
             print(l, file=f)
 
     subprocess.check_call(['git', 'add', issue.extrafile])
-    subprocess.check_call(['git', 'commit', '-m', f'Fix user reported mistakes\nCloses: #{issue.number}', issue.extrafile])
-    # TODO close the issue even if all changes are rejected
+    try:
+        subprocess.check_call(['git', 'commit', '-m', f'Fix user reported mistakes\nCloses: #{issue.number}', issue.extrafile])
+    except subprocess.CalledProcessError:
+        pass
+        # TODO close the issue via API
 
 
 def main():
