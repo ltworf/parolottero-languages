@@ -75,7 +75,7 @@ class Issue(NamedTuple):
 
     @property
     def language(self) -> str:
-        return next(self._prefix('Language: ')).split(' ')[-1]
+        return next(self._prefix('Language: ')).split(' ', 1)[-1]
 
     @property
     def extrafile(self) -> str:
@@ -87,11 +87,28 @@ class Issue(NamedTuple):
 
     @property
     def machineid(self) -> str:
-        return next(self._prefix('id: ')).split(' ')[-1]
+        return next(self._prefix('id: ')).split(' ', 1)[-1]
 
     def __str__(self) -> str:
         return f'#{self.number}: {self.language}\nAutomatic: {self.autoissue} From machine: {self.machineid}\n'
 
+
+def interactive_fix_issue(issue: Issue) -> None:
+    with issue.extrafile.open('rt') as f:
+        extras = {i.strip() for i in f}
+
+    print(f'===== Doing extra words for {issue.language}')
+    for diff in issue.diff():
+        reply = input(f'Is this valid [yN]? {diff}')
+        if reply in {'y', 'Y', 'YES', 'yes'}:
+            extras.add(diff)
+
+    with issue.extrafile.open('wt') as f:
+        for l in extras:
+            print(l, file=f)
+
+    # TODO create commit and close the issue
+    # TODO close the issue even if all changes are rejected
 
 
 def main():
@@ -110,7 +127,8 @@ def main():
     # We know what the API returns so we can load the json into typed data
     issues = loader.load(data, List[Issue])
     for i in issues:
-        print(str(i))
+        if i.autoissue:
+            interactive_fix_issue(i)
 
 
 if __name__ == '__main__':
