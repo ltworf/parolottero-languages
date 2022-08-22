@@ -83,6 +83,8 @@ class Issue(NamedTuple):
         a = {
             'Sicilianu': 'extralist/sicilian.extra',
             'Italiano': 'extralist/italian.extra',
+            'English': 'extralist/english.extra',
+            'US English': 'extralist/american.extra',
         }
         return Path(a[self.language])
 
