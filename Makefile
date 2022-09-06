@@ -45,8 +45,8 @@ dist: wordlists
 	( \
 		cd /tmp; \
 		tar --exclude '*.user' -zcf parolottero-languages.tar.gz \
-			parolottero-languages/language_data \
 			parolottero-languages/dict \
+			parolottero-languages/extralist \
 			parolottero-languages/utils \
 			parolottero-languages/Makefile \
 			parolottero-languages/LICENSE \
