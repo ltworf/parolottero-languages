@@ -61,7 +61,6 @@ dist: wordlists
 deb-pkg: dist wordlists
 	mkdir -p deb-pkg
 	cp language_data/* deb-pkg
-	./compress_lang.sh
 	$(RM) -r /tmp/parolottero*
 	mv parolottero-languages*orig* /tmp
 	cd /tmp; tar -xf parolottero-languages*orig*.gz
