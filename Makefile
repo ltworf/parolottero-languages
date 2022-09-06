@@ -29,7 +29,6 @@ language_data/%: dict/sicilian dict/italian dict/swedish.xpi dict/english.xpi di
 .PHONY: clean
 clean:
 	$(RM) -r language_data
-	$(RM) -r dict
 
 .PHONY: install
 install: wordlists
@@ -37,7 +36,7 @@ install: wordlists
 	cp language_data/* $${DESTDIR:-/}/usr/share/games/parolottero/language_data/
 
 .PHONY: dist
-dist: wordlists
+dist: dict/sicilian dict/italian dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/basque.xpi dict/french.xpi
 	rm -rf /tmp/parolottero-languages/
 	rm -rf /tmp/parolottero-languages-*
 	mkdir /tmp/parolottero-languages/
@@ -58,9 +57,8 @@ dist: wordlists
 	gpg --sign --armor --detach-sign ./parolottero-languages_`head -1 CHANGELOG`.orig.tar.gz
 
 .PHONY: deb-pkg
-deb-pkg: dist wordlists
+deb-pkg: dist
 	mkdir -p deb-pkg
-	cp language_data/* deb-pkg
 	$(RM) -r /tmp/parolottero*
 	mv parolottero-languages*orig* /tmp
 	cd /tmp; tar -xf parolottero-languages*orig*.gz
