@@ -7,8 +7,7 @@ Files: *
 Copyright: © 2021-2022 Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 License: AGPL-3
 
-Files: language_data/sicilian*
- dict/sicilian
+Files: dict/sicilian
 Copyright: © 2022 Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
  © Sicilian Wikipedia Authors
 Comment: Originally from https://github.com/ltworf/sicilianu
@@ -17,29 +16,46 @@ License: GFDL-1.3
  On Debian systems, the complete text of the GNU Free Documentation
  License can be found in '/usr/share/common-licenses/GFDL-1.3'.
 
-Files: language_data/italian*
- dict/italian
+Files: dict/italian
 Copyright: © 2016 Francesco Napoletano
 License: MIT
 Comment: Originally from https://github.com/napolux/paroleitaliane
  modified to fit the game.
 
-Files: language_data/swedish*
- dict/swedish.xpi
+Files: dict/swedish.xpi
 Comment: From Firefox spellchecking
 Copyright: Copyright © 2003-2015 Göran Andersson <goran@init.se>.
 License: LGPL-3+
  On Debian systems, the complete text of the GNU Lesser General
  Public License can be found in `/usr/share/common-licenses/LGPL-3'.
 
-Files: language_data/american*
- dict/american.xpi
+Files: dict/basque.xpi
+Comment: From Firefox spellchecking: https://addons.mozilla.org/en-US/firefox/addon/xuxen/
+Copyright: © 2018 Elhuyar Hizkuntza eta Teknologia
+License: GPL-2
+ On Debian systems, the complete text of the GNU General Public License
+ can be found in `/usr/share/common-licenses/GPL-2`.
+
+Files: dict/french.xpi
+Comment: From Firefox spellchecking: https://addons.mozilla.org/it/firefox/addon/dictionnaire-fran%C3%A7ais1/
+Copyright: © 2020 Olivier R.
+License: MPL-2.0
+ On Debian systems, the complete text of the Mozilla Public License 2.0
+ can be found in `/usr/share/common-licenses/MPL-2.0`
+
+Files: dict/greek.xpi
+Comment: From Firefox spellchecking: https://addons.mozilla.org/it/firefox/addon/greek-spellchecking-dictionary/
+Copyright: © 2007 Evripidis Papakostas, Steve Stavropulos
+License: MPL-1.1
+ On Debian systems, the complete text of the Mozilla Public License 1.1
+ can be found in `/usr/share/common-licenses/MPL-1.1`
+
+Files: dict/american.xpi
 Comment: From Firefox spellchecking
 Copyright: © 2020 by Kevin Atkinson (kevina@gnu.org)
 License: SCOWL
 
-Files: language_data/english*
- dict/english.xpi
+Files: dict/english.xpi
 Comment: From Firefox spellchecking
 Copyright: © 2020 by Kevin Atkinson (kevina@gnu.org)
  David Bartlett
