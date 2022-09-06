@@ -1,4 +1,5 @@
 language_data/
+*.orig.*
 *kdev4
 build-*
 deb-pkg/
