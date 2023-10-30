@@ -1,5 +1,5 @@
-parolottero-languages (2.0-1) UNRELEASED; urgency=medium
+parolottero-languages (2.0-1) experimental; urgency=low
 
   * Initial release (Closes: #1019290)
 
- -- Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>  Sat, 12 Mar 2022 20:38:25 +0100
+ -- Salvo 'LtWorf' Tomaselli <ltworf@debian.org>  Sat, 12 Mar 2022 20:38:25 +0100

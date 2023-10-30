@@ -1,7 +1,7 @@
 Source: parolottero-languages
 Section: games
 Priority: optional
-Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
+Maintainer: Salvo 'LtWorf' Tomaselli <ltworf@debian.org>
 Build-Depends:
  debhelper-compat (= 13),
  python3,

@@ -1,14 +1,14 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Contact: Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
-Source: https://github.com/ltworf/parolottero
+Upstream-Contact: Salvo "LtWorf" Tomaselli <ltworf@debian.org>
+Source: https://github.com/ltworf/parolottero-languages
 Upstream-Name: parolottero
 
 Files: *
-Copyright: © 2021-2022 Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Copyright: © 2021-2022 Salvo "LtWorf" Tomaselli <ltworf@debian.org>
 License: AGPL-3
 
 Files: dict/sicilian
-Copyright: © 2022 Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Copyright: © 2022 Salvo "LtWorf" Tomaselli <ltworf@debian.org>
  © Sicilian Wikipedia Authors
 Comment: Originally from https://codeberg.org/parolottero/sicilianu
  modified to fit the game.
