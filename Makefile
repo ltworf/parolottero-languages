@@ -1,5 +1,5 @@
 # parolottero-languages
-# Copyright (C) 2021-2022 Salvo "LtWorf" Tomaselli
+# Copyright (C) 2021-2023 Salvo "LtWorf" Tomaselli
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,10 +17,11 @@
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 .PHONY: wordlists
-wordlists: language_data/swedish language_data/english language_data/american language_data/italian language_data/sicilian
+wordlists: language_data/swedish language_data/american language_data/italian language_data/sicilian
 #TODO language_data/greek
 #TODO language_data/basque
 #TODO language_data/french
+#TODO language_data/english
 
 language_data/%: dict/sicilian dict/italian dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/basque.xpi dict/french.xpi
 	mkdir -p language_data
