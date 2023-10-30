@@ -8,10 +8,12 @@ Copyright: © 2021-2022 Salvo "LtWorf" Tomaselli <ltworf@debian.org>
 License: AGPL-3
 
 Files: dict/sicilian
-Copyright: © 2022 Salvo "LtWorf" Tomaselli <ltworf@debian.org>
+Copyright: © 2022-2023 Salvo "LtWorf" Tomaselli <ltworf@debian.org>
  © Sicilian Wikipedia Authors
 Comment: Originally from https://codeberg.org/parolottero/sicilianu
  modified to fit the game.
+ .
+ Extracted from sicilian wikipedia and public domain literary works.
 License: GFDL-1.3
  On Debian systems, the complete text of the GNU Free Documentation
  License can be found in '/usr/share/common-licenses/GFDL-1.3'.
