@@ -53,8 +53,6 @@ Description: Compose words using a 4x4 grid of letters, Swedish game files
  This package contains the data files to play with Swedish words.
 
 Package: parolottero-data-scn
-Breaks: parolottero-data-scn (<<2.0)
-Replaces: parolottero-data-scn (<<2.0)
 Provides: parolottero-data
 Depends: ${misc:Depends}, parolottero (>=2.0-1)
 Architecture: all
