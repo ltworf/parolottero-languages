@@ -23,7 +23,11 @@ wordlists: language_data/swedish language_data/american language_data/italian la
 #TODO language_data/french
 #TODO language_data/english
 
-language_data/%: dict/sicilian dict/italian dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/basque.xpi dict/french.xpi
+language_data/%: dict/sicilian dict/italian dict/swedish.xpi dict/american.xpi
+# dict/greek.xpi
+# dict/basque.xpi
+# dict/french.xpi
+# dict/english.xpi
 	mkdir -p language_data
 	utils/lang_init.py `basename $@` $@ $@.wordlist
 
@@ -37,7 +41,11 @@ install: wordlists
 	cp language_data/* $${DESTDIR:-/}/usr/share/games/parolottero/language_data/
 
 .PHONY: dist
-dist: dict/sicilian dict/italian dict/swedish.xpi dict/english.xpi dict/american.xpi dict/greek.xpi dict/basque.xpi dict/french.xpi
+dist: dict/sicilian dict/italian dict/swedish.xpi dict/american.xpi
+# dict/greek.xpi
+# dict/basque.xpi
+# dict/french.xpi
+# dict/english.xpi
 	rm -rf /tmp/parolottero-languages/
 	rm -rf /tmp/parolottero-languages-*
 	mkdir /tmp/parolottero-languages/
