@@ -1,4 +1,6 @@
 Parolottero languages
 =====================
 
-Language files for parolottero. https://github.com/ltworf/parolottero
+Language files for parolottero.
+
+[THE PROJECT MOVED](https://codeberg.org/parolottero/parolottero-languages)
